@@ -1,0 +1,10 @@
+{
+  "name": "Aegis Recovery: De-Addiction & Wellness Ecosystem",
+  "description": "Cross-platform de-addiction platform with real-time acoustic alarms, anti-bypass VPN & incognito defense, geofencing, biometric security, urge-killer workouts, and ad monetization.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
