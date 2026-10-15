@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "id": "https://ais-pre-ade2qvx4uwwfjx5bx54x4a-21782451185.asia-east1.run.app/",
+  "name": "BreakFree: De-Addiction & Sobriety Blocker",
+  "short_name": "BreakFree",
+  "description": "All-in-one de-addiction platform. Quit smoking, alcohol, and adult content with acoustic siren alarms, geofencing radar, and AI urge coach.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["health", "lifestyle", "productivity", "medical"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Emergency Panic SOS",
+      "short_name": "Panic SOS",
+      "description": "Trigger acoustic disarm siren and guardian alert",
+      "url": "/?action=sos",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "AI Craving Counselor",
+      "short_name": "AI Coach",
+      "description": "Neurobiology urge-killer drills and chat",
+      "url": "/?tab=ai",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Danger Zone Radar",
+      "short_name": "Geofence",
+      "description": "Proximity radar for trigger environments",
+      "url": "/?tab=radar",
+      "icons": [
+        {
+          "src": "/pwa-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BreakFree Mobile Sobriety Dashboard"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "BreakFree Desktop Recovery Command Center"
+    }
+  ]
+}

@@ -175,16 +175,44 @@ export const AdRevenueHub: React.FC = () => {
         </div>
       </div>
 
-      {/* Stream 1: Google AdSense / AdMob Live Banner Slot */}
-      <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl space-y-3">
-        <div className="flex items-center justify-between">
+      {/* Stream 1: Google AdSense / AdMob Network Slots & Rewarded Video */}
+      <div className="p-5 bg-slate-900 border border-slate-800 rounded-2xl space-y-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Globe className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-sm font-bold text-white">Google AdMob / AdSense Network Slot</h4>
+            <h4 className="text-sm font-bold text-white">Google AdMob / AdSense Network Slots &amp; Video Ads</h4>
           </div>
           <span className="text-[11px] text-slate-400 font-mono">
             Impressions: {liveImpressions.toLocaleString()} · Clicks: {liveClicks}
           </span>
+        </div>
+
+        {/* How Ad Money Works Education Card */}
+        <div className="p-3.5 bg-slate-950/70 border border-slate-800 rounded-xl space-y-2 text-xs">
+          <div className="font-bold text-emerald-400 flex items-center gap-1.5">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>How Ads Earn Money In This App (3 Ways):</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[11px] text-slate-300">
+            <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1">
+              <span className="font-bold text-white block">1. Display Banners (CPM)</span>
+              <p className="text-slate-400">
+                You get paid every time 1,000 users look at a banner, plus every time someone taps it. No video needed.
+              </p>
+            </div>
+            <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1">
+              <span className="font-bold text-amber-300 block">2. Rewarded Video Ads (High Pay)</span>
+              <p className="text-slate-400">
+                User taps: <em>"Watch 15s video to unlock 3 free AI queries"</em>. Pays highest rate (₹150–₹350 per 1,000 views).
+              </p>
+            </div>
+            <div className="p-2.5 bg-slate-900/90 rounded-lg border border-slate-800 space-y-1">
+              <span className="font-bold text-indigo-300 block">3. Milestone Interstitials</span>
+              <p className="text-slate-400">
+                Plays only when user celebrates 7/14/30 days sober or logs a completed workout. Never during emergency craving.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Display Banner Mock */}
@@ -192,7 +220,7 @@ export const AdRevenueHub: React.FC = () => {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-slate-800 text-slate-400 rounded">
-                Ad by Google
+                Static Banner Ad
               </span>
               <span className="text-xs font-semibold text-white">
                 Mindful Mornings: Clinically Backed Sleep &amp; Habit Restoration
@@ -209,6 +237,31 @@ export const AdRevenueHub: React.FC = () => {
           >
             <MousePointerClick className="w-3.5 h-3.5" />
             <span>Simulate User Ad Click (+₹25)</span>
+          </button>
+        </div>
+
+        {/* Rewarded Video Ad Test Player */}
+        <div className="p-4 bg-indigo-950/30 border border-indigo-500/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30">
+                Rewarded Video Ad
+              </span>
+              <span className="text-xs font-bold text-white">
+                "Watch 15-Sec Video to Unlock 3 AI Craving Queries"
+              </span>
+            </div>
+            <p className="text-xs text-slate-400">
+              User gets free value; you get premium video CPM revenue from Google AdMob.
+            </p>
+          </div>
+
+          <button
+            onClick={() => handleSimulateClick('google', 45)}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shrink-0 transition flex items-center gap-1.5 active:scale-95"
+          >
+            <Eye className="w-3.5 h-3.5" />
+            <span>Simulate Rewarded Video Watch (+₹45)</span>
           </button>
         </div>
       </div>

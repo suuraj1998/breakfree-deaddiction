@@ -6,12 +6,14 @@ interface OwnerAdminModalProps {
   isOpen: boolean;
   onClose: () => void;
   masterPin: string;
+  onOpenPublish?: () => void;
 }
 
 export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
   isOpen,
   onClose,
   masterPin,
+  onOpenPublish,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -21,7 +23,7 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput.trim() === masterPin || pinInput.trim() === '1984') {
+    if (pinInput.trim() === masterPin || pinInput.trim() === '1998') {
       setIsAuthenticated(true);
       setPinError(false);
     } else {
@@ -83,7 +85,7 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
                   type="password"
                   maxLength={4}
                   autoFocus
-                  placeholder="Master PIN (1984)"
+                  placeholder="Master PIN (1998)"
                   value={pinInput}
                   onChange={(e) => setPinInput(e.target.value)}
                   className={`w-40 mx-auto block bg-slate-950 border ${
@@ -92,7 +94,7 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
                 />
                 {pinError && (
                   <p className="text-xs text-red-400 font-medium">
-                    Incorrect PIN. Use master PIN (1984).
+                    Incorrect PIN. Use master PIN (1998).
                   </p>
                 )}
                 <button
@@ -105,16 +107,29 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 flex items-center justify-between">
+              <div className="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                 <span>
                   ✓ Founder session authenticated. Public users only see the regular <strong>Recovery Store</strong>.
                 </span>
-                <button
-                  onClick={() => setIsAuthenticated(false)}
-                  className="text-[11px] underline text-slate-400 hover:text-white"
-                >
-                  Lock Session
-                </button>
+                <div className="flex items-center gap-2">
+                  {onOpenPublish && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenPublish();
+                      }}
+                      className="px-2.5 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg text-[11px] flex items-center gap-1 transition shadow-sm"
+                    >
+                      <span>Publish to Play Store &amp; Web</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setIsAuthenticated(false)}
+                    className="text-[11px] underline text-slate-400 hover:text-white"
+                  >
+                    Lock Session
+                  </button>
+                </div>
               </div>
 
               {/* Render the internal revenue hub exclusively inside this protected modal */}

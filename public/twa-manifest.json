@@ -1,0 +1,44 @@
+{
+  "packageId": "com.breakfree.deaddiction",
+  "host": "ais-pre-ade2qvx4uwwfjx5bx54x4a-21782451185.asia-east1.run.app",
+  "name": "BreakFree: De-Addiction & Sobriety",
+  "launcherName": "BreakFree",
+  "display": "standalone",
+  "themeColor": "#020617",
+  "navigationColor": "#020617",
+  "backgroundColor": "#020617",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://ais-pre-ade2qvx4uwwfjx5bx54x4a-21782451185.asia-east1.run.app/pwa-512x512.png",
+  "maskableIconUrl": "https://ais-pre-ade2qvx4uwwfjx5bx54x4a-21782451185.asia-east1.run.app/pwa-maskable-512x512.png",
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Panic Button",
+      "short_name": "SOS",
+      "url": "/?action=sos",
+      "icon": "/pwa-192x192.png"
+    },
+    {
+      "name": "AI Urge Coach",
+      "short_name": "Coach",
+      "url": "/?tab=ai",
+      "icon": "/pwa-192x192.png"
+    }
+  ],
+  "generatorApp": "pwabuilder / bubblewrap",
+  "webManifestUrl": "/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {
+    "locationDelegation": {
+      "enabled": true
+    },
+    "playBilling": {
+      "enabled": false
+    }
+  },
+  "alphaDependencies": {
+    "enabled": false
+  }
+}

@@ -434,6 +434,36 @@ app.get('/api/sponsors', (req, res) => {
   res.json({ sponsors: directSponsors });
 });
 
+// Explicit Digital Asset Links endpoint for Google Play Store TWA verification
+app.get('/.well-known/assetlinks.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.sendFile(path.resolve(__dirname, 'public', '.well-known', 'assetlinks.json'));
+});
+
+// Explicit Privacy Policy endpoint for Google Play compliance
+app.get('/privacy-policy.html', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'privacy-policy.html'));
+});
+
+// Explicit PWA Manifest endpoints with proper MIME types for PWABuilder
+app.get(['/manifest.json', '/manifest.webmanifest'], (req, res) => {
+  res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.sendFile(path.resolve(__dirname, 'public', 'manifest.json'));
+});
+
+// Explicit Service Worker endpoint with Service-Worker-Allowed header
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.resolve(__dirname, 'public', 'sw.js'));
+});
+
+// Serve public static assets (icons, splash screens, assetlinks)
+app.use(express.static(path.resolve(__dirname, 'public')));
+
 // Mount Vite or static server
 async function startServer() {
   if (!isProd) {

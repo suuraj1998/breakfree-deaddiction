@@ -13,7 +13,7 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
   onTriggerGeofenceAlarm,
   onAddDangerZone,
 }) => {
-  const [selectedZone, setSelectedZone] = useState<DangerZone>(dangerZones[0]);
+  const [selectedZone, setSelectedZone] = useState<DangerZone | undefined>(dangerZones[0]);
   const [simulatedDistanceMeters, setSimulatedDistanceMeters] = useState(120);
   const [isAddingZone, setIsAddingZone] = useState(false);
   const [newZoneName, setNewZoneName] = useState('');
@@ -21,12 +21,23 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
   const [newZoneCategory, setNewZoneCategory] = useState<HabitCategory>('smoking');
   const [newZoneRadius, setNewZoneRadius] = useState(50);
 
-  const isBreached = simulatedDistanceMeters <= selectedZone.radiusMeters;
+  const currentZone: DangerZone = selectedZone || dangerZones[0] || {
+    id: 'default-safe-perimeter',
+    name: 'Perimeter Safe Boundary',
+    address: 'Configured High-Risk Perimeter',
+    category: 'smoking' as HabitCategory,
+    latitude: 28.614,
+    longitude: 77.209,
+    radiusMeters: 50,
+    isActive: true,
+  };
+
+  const isBreached = simulatedDistanceMeters <= currentZone.radiusMeters;
 
   const handleDistanceChange = (meters: number) => {
     setSimulatedDistanceMeters(meters);
-    if (meters <= selectedZone.radiusMeters) {
-      onTriggerGeofenceAlarm(selectedZone);
+    if (meters <= currentZone.radiusMeters) {
+      onTriggerGeofenceAlarm(currentZone);
     }
   };
 
@@ -171,7 +182,7 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
           </h4>
           <div className="space-y-2">
             {dangerZones.map((zone) => {
-              const isSelected = zone.id === selectedZone.id;
+              const isSelected = zone.id === currentZone.id;
               return (
                 <button
                   key={zone.id}
@@ -208,10 +219,10 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
           <div>
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/30">
-                Target Zone: {selectedZone.name}
+                Target Zone: {currentZone.name}
               </span>
               <span className="text-xs font-mono text-slate-400">
-                Breach Threshold: <strong>{selectedZone.radiusMeters}m</strong>
+                Breach Threshold: <strong>{currentZone.radiusMeters}m</strong>
               </span>
             </div>
             <h3 className="text-xl font-bold text-white mt-2">Live Distance Radar</h3>
@@ -274,7 +285,7 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
               />
               <div className="flex justify-between text-[10px] text-slate-500 mt-1 font-mono">
                 <span>10m (At Front Door)</span>
-                <span className="text-amber-400">{selectedZone.radiusMeters}m (Breach Line)</span>
+                <span className="text-amber-400">{currentZone.radiusMeters}m (Breach Line)</span>
                 <span>200m (Far Away)</span>
               </div>
             </div>
@@ -282,7 +293,7 @@ export const GeofenceRadar: React.FC<GeofenceRadarProps> = ({
             {/* Manual Quick Action Button */}
             <div className="flex gap-2">
               <button
-                onClick={() => handleDistanceChange(selectedZone.radiusMeters - 10)}
+                onClick={() => handleDistanceChange(currentZone.radiusMeters - 10)}
                 className="flex-1 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 active:scale-95"
               >
                 <ShieldAlert className="w-4 h-4" />

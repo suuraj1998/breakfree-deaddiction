@@ -19,6 +19,8 @@ import { SentinelAlarmModal } from './components/SentinelAlarmModal';
 import { AiCounselorModal } from './components/AiCounselorModal';
 import { SubscriptionModal } from './components/SubscriptionModal';
 import { AppStoreExportModal } from './components/AppStoreExportModal';
+import { PublishModal } from './components/PublishModal';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 import {
   Habit,
@@ -45,7 +47,7 @@ export default function App() {
   const [habits, setHabits] = useState<Habit[]>(INITIAL_HABITS);
   const [dangerZones, setDangerZones] = useState<DangerZone[]>(INITIAL_DANGER_ZONES);
   const [guardian, setGuardian] = useState<EmergencyContact>(INITIAL_GUARDIAN);
-  const [masterPin, setMasterPin] = useState('1984');
+  const [masterPin, setMasterPin] = useState('1998');
   const [subscription, setSubscription] = useState<UserSubscription>({
     tier: 'free',
     region: 'IN',
@@ -61,6 +63,9 @@ export default function App() {
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const [isAppStoreExportOpen, setIsAppStoreExportOpen] = useState(false);
   const [isOwnerAdminOpen, setIsOwnerAdminOpen] = useState(false);
+
+  // Mobile Sentinel sub-tab state
+  const [sentinelMobileSubTab, setSentinelMobileSubTab] = useState<'blocker' | 'radar' | 'antibypass'>('blocker');
 
   // Emergency Intervention Triggers
   const triggerAlarm = (
@@ -154,69 +159,15 @@ export default function App() {
           className={`mx-auto transition-all duration-300 ${
             isMobileSimulator
               ? 'max-w-[420px] my-6 border-[10px] border-slate-800 rounded-[48px] shadow-2xl overflow-hidden bg-slate-950 p-4 ring-1 ring-slate-700/60'
-              : 'max-w-6xl px-4 sm:px-6 lg:px-8 py-6'
+              : 'max-w-6xl px-3 sm:px-6 lg:px-8 py-3 sm:py-6'
           }`}
         >
           {/* Mobile Shell Notch & Speaker (Simulated Mode Only) */}
           {isMobileSimulator && (
-            <div className="w-full flex justify-center pb-4 pt-1">
+            <div className="w-full flex justify-center pb-3 pt-1">
               <div className="w-28 h-4 bg-slate-800 rounded-full flex items-center justify-center">
                 <div className="w-10 h-1 bg-slate-700 rounded-full" />
               </div>
-            </div>
-          )}
-
-          {/* Sub Navigation Bar for Mobile Simulator Mode */}
-          {isMobileSimulator && (
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-3 mb-4 text-xs no-scrollbar border-b border-slate-800">
-              <button
-                onClick={() => setActiveTab('dashboard')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'dashboard' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                Dashboard
-              </button>
-              <button
-                onClick={() => setActiveTab('sentinel')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'sentinel' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                Sentinel
-              </button>
-              <button
-                onClick={() => setActiveTab('ailab')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'ailab' ? 'bg-indigo-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                AI Lab
-              </button>
-              <button
-                onClick={() => setActiveTab('antibypass')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'antibypass' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                Anti-Bypass
-              </button>
-              <button
-                onClick={() => setActiveTab('wellness')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'wellness' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                Workouts
-              </button>
-              <button
-                onClick={() => setActiveTab('store')}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition ${
-                  activeTab === 'store' ? 'bg-emerald-600 text-white font-bold' : 'text-slate-400'
-                }`}
-              >
-                Store
-              </button>
             </div>
           )}
 
@@ -233,19 +184,80 @@ export default function App() {
           )}
 
           {activeTab === 'sentinel' && (
-            <div className="space-y-6">
-              <SentinelInterceptorView
-                guardian={guardian}
-                onUpdateGuardian={setGuardian}
-                masterPin={masterPin}
-                onUpdatePin={setMasterPin}
-                onSimulateUrlBlock={handleSimulateUrlBlock}
-              />
-              <GeofenceRadar
-                dangerZones={dangerZones}
-                onTriggerGeofenceAlarm={handleTriggerGeofence}
-                onAddDangerZone={handleAddDangerZone}
-              />
+            <div>
+              {/* Mobile-Only Segmented Sub-Nav for Sentinel to prevent vertical crowding */}
+              <div className="block sm:hidden mb-4">
+                <div className="grid grid-cols-3 gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl">
+                  <button
+                    onClick={() => setSentinelMobileSubTab('blocker')}
+                    className={`py-2 px-1 text-[11px] font-bold rounded-lg transition text-center truncate ${
+                      sentinelMobileSubTab === 'blocker'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Web Blocker
+                  </button>
+                  <button
+                    onClick={() => setSentinelMobileSubTab('radar')}
+                    className={`py-2 px-1 text-[11px] font-bold rounded-lg transition text-center truncate ${
+                      sentinelMobileSubTab === 'radar'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    GPS Radar
+                  </button>
+                  <button
+                    onClick={() => setSentinelMobileSubTab('antibypass')}
+                    className={`py-2 px-1 text-[11px] font-bold rounded-lg transition text-center truncate ${
+                      sentinelMobileSubTab === 'antibypass'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Anti-Bypass
+                  </button>
+                </div>
+
+                <div className="mt-3">
+                  {sentinelMobileSubTab === 'blocker' && (
+                    <SentinelInterceptorView
+                      guardian={guardian}
+                      onUpdateGuardian={setGuardian}
+                      masterPin={masterPin}
+                      onUpdatePin={setMasterPin}
+                      onSimulateUrlBlock={handleSimulateUrlBlock}
+                    />
+                  )}
+                  {sentinelMobileSubTab === 'radar' && (
+                    <GeofenceRadar
+                      dangerZones={dangerZones}
+                      onTriggerGeofenceAlarm={handleTriggerGeofence}
+                      onAddDangerZone={handleAddDangerZone}
+                    />
+                  )}
+                  {sentinelMobileSubTab === 'antibypass' && (
+                    <AntiBypassShield onSimulateBypass={handleSimulateBypass} />
+                  )}
+                </div>
+              </div>
+
+              {/* Desktop / Tablet Landscape View: Unchanged full multi-module view */}
+              <div className="hidden sm:block space-y-6">
+                <SentinelInterceptorView
+                  guardian={guardian}
+                  onUpdateGuardian={setGuardian}
+                  masterPin={masterPin}
+                  onUpdatePin={setMasterPin}
+                  onSimulateUrlBlock={handleSimulateUrlBlock}
+                />
+                <GeofenceRadar
+                  dangerZones={dangerZones}
+                  onTriggerGeofenceAlarm={handleTriggerGeofence}
+                  onAddDangerZone={handleAddDangerZone}
+                />
+              </div>
             </div>
           )}
 
@@ -265,13 +277,13 @@ export default function App() {
         </div>
       </main>
 
-      {/* Floating AI Craving Coach Quick Trigger */}
+      {/* Floating AI Craving Coach Quick Trigger - Hidden on mobile to keep interface uncluttered, shown on desktop */}
       <button
         onClick={() => setIsAiCounselorOpen(true)}
-        className="fixed bottom-20 lg:bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-bold text-xs rounded-full shadow-xl shadow-indigo-600/30 transition-transform active:scale-95"
+        className="hidden sm:flex fixed bottom-6 right-6 z-30 items-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-bold text-xs rounded-full shadow-xl shadow-indigo-600/30 transition-transform active:scale-95"
       >
         <Bot className="w-4 h-4" />
-        <span className="hidden sm:inline">AI Craving Counselor</span>
+        <span>AI Craving Counselor</span>
       </button>
 
       {/* Mobile Bottom Tab Navigation */}
@@ -301,7 +313,8 @@ export default function App() {
         onUpgrade={setSubscription}
       />
 
-      <AppStoreExportModal
+      {/* Web & Google Play Store Publishing Suite */}
+      <PublishModal
         isOpen={isAppStoreExportOpen}
         onClose={() => setIsAppStoreExportOpen(false)}
       />
@@ -311,7 +324,11 @@ export default function App() {
         isOpen={isOwnerAdminOpen}
         onClose={() => setIsOwnerAdminOpen(false)}
         masterPin={masterPin}
+        onOpenPublish={() => setIsAppStoreExportOpen(true)}
       />
+
+      {/* Real-time offline connectivity indicator */}
+      <OfflineIndicator />
     </div>
   );
 }

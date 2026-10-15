@@ -121,9 +121,56 @@ export const WellnessModule: React.FC = () => {
       </div>
 
       {/* Main Exercise Arena */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: Exercise Selector List */}
-        <div className="lg:col-span-5 space-y-3">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+        {/* Mobile Horizontal Selector (lg:hidden) */}
+        <div className="block lg:hidden space-y-1.5">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 px-1">
+            Select Protocol
+          </div>
+          <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1">
+            {exercises.map((ex) => {
+              const isSelected = ex.id === activeExercise.id;
+              const isDone = completedExercises.includes(ex.id);
+              return (
+                <button
+                  key={ex.id}
+                  onClick={() => selectExercise(ex)}
+                  className={`p-2.5 rounded-xl border text-left transition flex items-center gap-2.5 shrink-0 whitespace-nowrap active:scale-95 ${
+                    isSelected
+                      ? 'bg-slate-800 border-emerald-500/70 ring-1 ring-emerald-500/30'
+                      : 'bg-slate-900 border-slate-800 text-slate-400'
+                  }`}
+                >
+                  <div
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                      ex.type === 'workout'
+                        ? 'bg-rose-500/15 text-rose-400'
+                        : ex.type === 'breathwork'
+                        ? 'bg-indigo-500/15 text-indigo-400'
+                        : 'bg-cyan-500/15 text-cyan-400'
+                    }`}
+                  >
+                    {ex.type === 'workout' && <Flame className="w-3.5 h-3.5" />}
+                    {ex.type === 'breathwork' && <Wind className="w-3.5 h-3.5" />}
+                    {ex.type === 'somatic' && <Droplets className="w-3.5 h-3.5" />}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-white flex items-center gap-1">
+                      <span>{ex.title}</span>
+                      {isDone && <CheckCircle2 className="w-3 h-3 text-emerald-400" />}
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {formatTime(ex.durationSeconds)}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Desktop Sidebar Selector List (hidden lg:block) */}
+        <div className="hidden lg:block lg:col-span-5 space-y-3">
           <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 px-1">
             Select Urge-Disruption Protocol
           </h4>

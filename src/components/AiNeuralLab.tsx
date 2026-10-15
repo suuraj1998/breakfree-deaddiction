@@ -161,32 +161,32 @@ export const AiNeuralLab: React.FC<AiNeuralLabProps> = ({ habits, onTriggerWorko
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="p-6 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 border border-indigo-500/30 rounded-2xl shadow-xl">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-              <Brain className="w-7 h-7" />
+      <div className="p-4 sm:p-6 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 border border-indigo-500/30 rounded-2xl shadow-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+              <Brain className="w-5 h-5 sm:w-7 sm:h-7" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-lg font-bold text-white">AI Neural Recovery Lab</h3>
-                <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30">
-                  Gemini 3.8 Flash Engine
+                <h3 className="text-base sm:text-lg font-bold text-white">AI Neural Recovery Lab</h3>
+                <span className="px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30">
+                  Gemini Flash
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Clinical-grade addiction neuroscience: Relapse forecaster, CBT rationalization buster, and somatic somatic drill generators.
+              <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">
+                Clinical-grade addiction neuroscience: Relapse forecaster, CBT excuse buster, and somatic drills.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Sub-Feature Navigation Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl">
+      {/* Sub-Feature Navigation Tabs (Smooth touch carousel on mobile, 4-col grid on desktop) */}
+      <div className="flex sm:grid sm:grid-cols-4 gap-1.5 p-1.5 bg-slate-900 border border-slate-800 rounded-2xl overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveSubTab('forecaster')}
-          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 sm:shrink ${
             activeSubTab === 'forecaster'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-400 hover:text-white'
@@ -198,7 +198,7 @@ export const AiNeuralLab: React.FC<AiNeuralLabProps> = ({ habits, onTriggerWorko
 
         <button
           onClick={() => setActiveSubTab('cbt')}
-          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 sm:shrink ${
             activeSubTab === 'cbt'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-400 hover:text-white'
@@ -210,26 +210,26 @@ export const AiNeuralLab: React.FC<AiNeuralLabProps> = ({ habits, onTriggerWorko
 
         <button
           onClick={() => setActiveSubTab('drill')}
-          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 sm:shrink ${
             activeSubTab === 'drill'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           <Zap className="w-3.5 h-3.5" />
-          <span>Context Drill Generator</span>
+          <span>Context Drills</span>
         </button>
 
         <button
           onClick={() => setActiveSubTab('neuro')}
-          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-3 text-xs font-bold rounded-xl transition flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 sm:shrink ${
             activeSubTab === 'neuro'
               ? 'bg-indigo-600 text-white shadow-md'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           <Dna className="w-3.5 h-3.5" />
-          <span>Brain Dopamine Map</span>
+          <span>Dopamine Map</span>
         </button>
       </div>
 

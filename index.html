@@ -3,6 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script>
+      (function() {
+        var isViteWsError = function(e) {
+          var msg = (e && (e.message || (e.reason && (e.reason.message || e.reason)))) || '';
+          var file = (e && e.filename) || '';
+          var stack = (e && e.error && e.error.stack) || '';
+          return (
+            msg.indexOf('WebSocket') !== -1 ||
+            msg.indexOf('createWebSocketModuleRunnerTransport') !== -1 ||
+            msg.indexOf('@vite/client') !== -1 ||
+            file.indexOf('@vite/client') !== -1 ||
+            stack.indexOf('@vite/client') !== -1
+          );
+        };
+        window.addEventListener('error', function(e) {
+          if (isViteWsError(e)) {
+            e.stopImmediatePropagation && e.stopImmediatePropagation();
+            e.preventDefault && e.preventDefault();
+            return true;
+          }
+        }, true);
+        window.addEventListener('unhandledrejection', function(e) {
+          if (isViteWsError(e)) {
+            e.stopImmediatePropagation && e.stopImmediatePropagation();
+            e.preventDefault && e.preventDefault();
+            return true;
+          }
+        }, true);
+        var origConsoleError = console.error;
+        console.error = function() {
+          var argsStr = Array.prototype.join.call(arguments, ' ');
+          if (
+            argsStr.indexOf('createWebSocketModuleRunnerTransport') !== -1 ||
+            (argsStr.indexOf('[vite]') !== -1 && argsStr.indexOf('WebSocket') !== -1)
+          ) {
+            return;
+          }
+          origConsoleError.apply(console, arguments);
+        };
+      })();
+    </script>
     <title>BreakFree: De-Addiction &amp; Sobriety Blocker</title>
     <meta name="description" content="BreakFree is an all-in-one de-addiction platform. Block adult content, quit smoking and alcohol with loud siren alarms, geofencing radar, and urge-killer workouts." />
     <meta name="keywords" content="de-addiction, deaddiction app, quit porn, stop smoking, sobriety tracker, quit alcohol, habit recovery, anti relapse, urge surfing" />
@@ -14,9 +55,28 @@
     <meta name="twitter:title" content="BreakFree: De-Addiction &amp; Sobriety Blocker" />
     <meta name="twitter:description" content="BreakFree is an all-in-one de-addiction platform. Block adult content, quit smoking and alcohol with loud siren alarms, geofencing radar, and urge-killer workouts." />
     <meta name="theme-color" content="#020617" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="BreakFree" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then(function(reg) {
+              console.log('[BreakFree PWA] Service Worker registered with scope:', reg.scope);
+            })
+            .catch(function(err) {
+              console.warn('[BreakFree PWA] Service Worker registration failed:', err);
+            });
+        });
+      }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Plus+Jakarta+Sans:wght@400..800&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet" />

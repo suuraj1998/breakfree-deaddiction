@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="wingGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="50%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+  <rect width="504" height="504" x="4" y="4" rx="108" fill="none" stroke="#10b981" stroke-width="4" stroke-opacity="0.3" />
+
+  <!-- Outer Protective Halo -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="10 14" opacity="0.35" />
+
+  <!-- Shield of Resilience -->
+  <path d="M 256 90 L 370 140 C 370 260 256 360 256 390 C 256 360 142 260 142 140 Z" 
+        fill="url(#shieldGrad)" 
+        filter="url(#glow)" 
+        opacity="0.95" />
+
+  <!-- Internal Shield Border -->
+  <path d="M 256 112 L 350 152 C 350 250 256 335 256 362 C 256 335 162 250 162 152 Z" 
+        fill="#020617" 
+        opacity="0.8" />
+
+  <!-- Rising Phoenix / Flame of Liberation Breaking Free -->
+  <!-- Left Wing -->
+  <path d="M 256 260 C 230 220 180 200 170 150 C 210 175 235 210 256 260 Z" fill="url(#wingGrad)" />
+  <!-- Right Wing -->
+  <path d="M 256 260 C 282 220 332 200 342 150 C 302 175 277 210 256 260 Z" fill="url(#wingGrad)" />
+
+  <!-- Central Flame of Willpower -->
+  <path d="M 256 160 C 235 210 215 240 240 280 C 248 293 256 300 256 300 C 256 300 264 293 272 280 C 297 240 277 210 256 160 Z" 
+        fill="url(#flameGrad)" 
+        filter="url(#glow)" />
+
+  <!-- Broken Chain Links (Overcoming Addiction) -->
+  <g stroke="#f59e0b" stroke-width="8" stroke-linecap="round" fill="none">
+    <!-- Broken Left Link -->
+    <path d="M 175 320 C 150 335 140 370 160 395 C 180 415 215 410 230 385" stroke-dasharray="35 15" />
+    <!-- Broken Right Link -->
+    <path d="M 337 320 C 362 335 372 370 352 395 C 332 415 297 410 282 385" stroke-dasharray="35 15" />
+  </g>
+
+  <!-- Sparkles of Freedom -->
+  <circle cx="200" cy="130" r="5" fill="#fde047" filter="url(#glow)" />
+  <circle cx="312" cy="130" r="5" fill="#fde047" filter="url(#glow)" />
+  <circle cx="256" cy="425" r="4" fill="#34d399" filter="url(#glow)" />
+</svg>

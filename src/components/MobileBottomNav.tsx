@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, ShieldAlert, Lock, Dumbbell, ShoppingBag, Brain } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Dumbbell, ShoppingBag, Brain } from 'lucide-react';
 
 interface MobileBottomNavProps {
   activeTab: 'dashboard' | 'sentinel' | 'antibypass' | 'wellness' | 'store' | 'community' | 'ailab';
@@ -16,8 +16,8 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activeTab, onS
   ];
 
   return (
-    <div className="xl:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800/90 pb-safe">
-      <div className="grid grid-cols-5 h-16 items-center px-2">
+    <nav className="xl:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/80 pb-safe">
+      <div className="grid grid-cols-5 h-14 items-center px-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.key;
@@ -25,18 +25,22 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ activeTab, onS
             <button
               key={tab.key}
               onClick={() => onSelectTab(tab.key)}
-              className={`flex flex-col items-center justify-center h-full min-h-[44px] min-w-[44px] transition-colors ${
-                isActive ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
+              className={`relative flex flex-col items-center justify-center h-full min-h-[44px] min-w-[44px] transition-all select-none active:scale-95 ${
+                isActive ? 'text-emerald-400 font-bold' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? 'scale-110' : ''} transition-transform`} />
-              <span className="text-[10px] font-medium tracking-tight mt-1 truncate max-w-[60px]">
+              {/* Subtle top indicator bar */}
+              {isActive && (
+                <span className="absolute top-0 w-8 h-0.5 bg-emerald-400 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              )}
+              <Icon className={`w-5 h-5 transition-transform ${isActive ? 'scale-110' : ''}`} />
+              <span className="text-[10px] tracking-tight mt-0.5 truncate max-w-[56px]">
                 {tab.label}
               </span>
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };

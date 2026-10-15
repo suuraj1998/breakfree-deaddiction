@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.breakfree.deaddiction",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:7D:0F:52:AB:70:0D:71:D0:3E:E0:4F:97:4B:02:97:F2:38:45:65:68:55:30:A4:58:1B:6F:42:07:05"
+      ]
+    }
+  }
+]

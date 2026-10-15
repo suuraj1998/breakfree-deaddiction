@@ -88,7 +88,7 @@ export const SentinelAlarmModal: React.FC<SentinelAlarmModalProps> = ({
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput.trim() === masterPin || pinInput.trim() === '1984' || pinInput.trim() === '0000') {
+    if (pinInput.trim() === masterPin || pinInput.trim() === '1998' || pinInput.trim() === '0000') {
       completeDisarm('pin');
     } else {
       setPinError(true);
@@ -207,7 +207,7 @@ export const SentinelAlarmModal: React.FC<SentinelAlarmModalProps> = ({
                       <input
                         type="password"
                         maxLength={4}
-                        placeholder="PIN (1984)"
+                        placeholder="PIN (1998)"
                         value={pinInput}
                         onChange={(e) => setPinInput(e.target.value)}
                         className={`w-full bg-slate-950 border ${
@@ -225,7 +225,7 @@ export const SentinelAlarmModal: React.FC<SentinelAlarmModalProps> = ({
                 </div>
                 {pinError && (
                   <p className="text-center text-xs text-red-400 font-medium">
-                    Incorrect Master PIN. Use default (1984) or touch scanner.
+                    Incorrect Master PIN. Use default (1998) or touch scanner.
                   </p>
                 )}
               </div>
