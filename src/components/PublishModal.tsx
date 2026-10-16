@@ -20,9 +20,10 @@ import {
 interface PublishModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenPlayStoreHub?: () => void;
 }
 
-export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose }) => {
+export const PublishModal: React.FC<PublishModalProps> = ({ isOpen, onClose, onOpenPlayStoreHub }) => {
   const [activeTab, setActiveTab] = useState<'playstore' | 'web' | 'assets'>('playstore');
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
@@ -139,12 +140,41 @@ bubblewrap build`;
                 </div>
               </div>
 
+              {/* NEW: Automated In-App Release Hub (Bypasses crawler & cookie blocks) */}
+              {onOpenPlayStoreHub && (
+                <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-teal-950/80 border-2 border-emerald-500/50 shadow-xl space-y-3">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold border border-emerald-500/30">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Recommended: 100% Reliable Client-Side Export</span>
+                      </div>
+                      <h3 className="text-base font-bold text-white">Google Play Store Release Hub</h3>
+                      <p className="text-xs text-slate-300 max-w-xl">
+                        AI Studio preview URLs are protected by Google authentication cookies, which blocks PWABuilder's remote web crawler. Use our built-in <strong>Play Store Release Hub</strong> to download the complete pre-configured Android project, 512px icon, and 1024px banner directly in 1 click!
+                      </p>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenPlayStoreHub();
+                      }}
+                      className="shrink-0 px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs flex items-center gap-2 shadow-lg transition active:scale-95"
+                    >
+                      <Download className="w-4 h-4" />
+                      <span>Open Release Hub</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Publication Method 1: PWABuilder (Recommended & Easiest) */}
               <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <span className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center">1</span>
-                    <h3 className="text-sm sm:text-base font-bold text-white">Method A: Instant 1-Click Package with PWABuilder (Recommended)</h3>
+                    <h3 className="text-sm sm:text-base font-bold text-white">Method A: Instant 1-Click Package with PWABuilder</h3>
                   </div>
                   <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                     No Android Studio needed

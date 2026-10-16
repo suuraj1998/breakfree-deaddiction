@@ -7,6 +7,7 @@ interface OwnerAdminModalProps {
   onClose: () => void;
   masterPin: string;
   onOpenPublish?: () => void;
+  onOpenPlayStoreHub?: () => void;
 }
 
 export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
@@ -14,6 +15,7 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
   onClose,
   masterPin,
   onOpenPublish,
+  onOpenPlayStoreHub,
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -112,15 +114,26 @@ export const OwnerAdminModal: React.FC<OwnerAdminModalProps> = ({
                   ✓ Founder session authenticated. Public users only see the regular <strong>Recovery Store</strong>.
                 </span>
                 <div className="flex items-center gap-2">
+                  {onOpenPlayStoreHub && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenPlayStoreHub();
+                      }}
+                      className="px-2.5 py-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-black rounded-lg text-[11px] flex items-center gap-1 transition shadow-sm"
+                    >
+                      <span>Play Store Hub (.zip)</span>
+                    </button>
+                  )}
                   {onOpenPublish && (
                     <button
                       onClick={() => {
                         onClose();
                         onOpenPublish();
                       }}
-                      className="px-2.5 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg text-[11px] flex items-center gap-1 transition shadow-sm"
+                      className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg text-[11px] flex items-center gap-1 transition shadow-sm"
                     >
-                      <span>Publish to Play Store &amp; Web</span>
+                      <span>Publish Docs</span>
                     </button>
                   )}
                   <button

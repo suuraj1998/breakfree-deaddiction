@@ -20,7 +20,9 @@ import { AiCounselorModal } from './components/AiCounselorModal';
 import { SubscriptionModal } from './components/SubscriptionModal';
 import { AppStoreExportModal } from './components/AppStoreExportModal';
 import { PublishModal } from './components/PublishModal';
+import { PlayStoreReleaseHub } from './components/PlayStoreReleaseHub';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { AppFooter } from './components/AppFooter';
 
 import {
   Habit,
@@ -34,7 +36,7 @@ import {
   INITIAL_DANGER_ZONES,
   INITIAL_GUARDIAN,
 } from './data/mockData';
-import { Bot, Zap, Crown, ShieldAlert, Brain } from 'lucide-react';
+import { Bot } from 'lucide-react';
 
 export default function App() {
   // Navigation & Viewport State
@@ -62,6 +64,7 @@ export default function App() {
   const [isAiCounselorOpen, setIsAiCounselorOpen] = useState(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState(false);
   const [isAppStoreExportOpen, setIsAppStoreExportOpen] = useState(false);
+  const [isPlayStoreHubOpen, setIsPlayStoreHubOpen] = useState(false);
   const [isOwnerAdminOpen, setIsOwnerAdminOpen] = useState(false);
 
   // Mobile Sentinel sub-tab state
@@ -148,28 +151,15 @@ export default function App() {
         onToggleMobileSimulator={() => setIsMobileSimulator(!isMobileSimulator)}
         onOpenSubscription={() => setIsSubscriptionOpen(true)}
         onOpenAppStoreExport={() => setIsAppStoreExportOpen(true)}
+        onOpenPlayStoreHub={() => setIsPlayStoreHubOpen(true)}
         onOpenOwnerAdmin={() => setIsOwnerAdminOpen(true)}
         onTriggerPanic={() => handleManualPanic()}
         subscription={subscription}
       />
 
       {/* Main Viewport Container */}
-      <main className="flex-1 pb-24 lg:pb-12">
-        <div
-          className={`mx-auto transition-all duration-300 ${
-            isMobileSimulator
-              ? 'max-w-[420px] my-6 border-[10px] border-slate-800 rounded-[48px] shadow-2xl overflow-hidden bg-slate-950 p-4 ring-1 ring-slate-700/60'
-              : 'max-w-6xl px-3 sm:px-6 lg:px-8 py-3 sm:py-6'
-          }`}
-        >
-          {/* Mobile Shell Notch & Speaker (Simulated Mode Only) */}
-          {isMobileSimulator && (
-            <div className="w-full flex justify-center pb-3 pt-1">
-              <div className="w-28 h-4 bg-slate-800 rounded-full flex items-center justify-center">
-                <div className="w-10 h-1 bg-slate-700 rounded-full" />
-              </div>
-            </div>
-          )}
+      <main className="flex-1 pb-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
 
           {/* Active View Routing */}
           {activeTab === 'dashboard' && (
@@ -277,6 +267,16 @@ export default function App() {
         </div>
       </main>
 
+      {/* Production-grade Web Application Footer */}
+      <AppFooter
+        onOpenPlayStoreHub={() => setIsPlayStoreHubOpen(true)}
+        onOpenAppStoreExport={() => setIsAppStoreExportOpen(true)}
+        onOpenOwnerAdmin={() => setIsOwnerAdminOpen(true)}
+        onSelectTab={setActiveTab}
+        onOpenAiCounselor={() => setIsAiCounselorOpen(true)}
+        onTriggerPanic={() => handleManualPanic()}
+      />
+
       {/* Floating AI Craving Coach Quick Trigger - Hidden on mobile to keep interface uncluttered, shown on desktop */}
       <button
         onClick={() => setIsAiCounselorOpen(true)}
@@ -317,6 +317,13 @@ export default function App() {
       <PublishModal
         isOpen={isAppStoreExportOpen}
         onClose={() => setIsAppStoreExportOpen(false)}
+        onOpenPlayStoreHub={() => setIsPlayStoreHubOpen(true)}
+      />
+
+      {/* Google Play Store Release Hub (Automated Packager & Assets) */}
+      <PlayStoreReleaseHub
+        isOpen={isPlayStoreHubOpen}
+        onClose={() => setIsPlayStoreHubOpen(false)}
       />
 
       {/* Owner / Founder Admin Modal (PIN Protected, completely hidden from public users) */}
@@ -325,6 +332,7 @@ export default function App() {
         onClose={() => setIsOwnerAdminOpen(false)}
         masterPin={masterPin}
         onOpenPublish={() => setIsAppStoreExportOpen(true)}
+        onOpenPlayStoreHub={() => setIsPlayStoreHubOpen(true)}
       />
 
       {/* Real-time offline connectivity indicator */}
